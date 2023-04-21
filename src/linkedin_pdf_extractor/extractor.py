@@ -34,9 +34,9 @@ class Experience:
         self.position = ""
         self.date = ""
         self.description = ""
-        def toJSON(self):
-            return json.dumps(self, default=lambda o: o.__dict__, 
-                sort_keys=True, indent=2)
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, 
+            sort_keys=True, indent=2)
 
 class Education:
     def __init__(self):

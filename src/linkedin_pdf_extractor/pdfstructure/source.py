@@ -74,17 +74,19 @@ class FileSource(Source):
                 line.add(letter)
 
     def split_boxes_by_style(self, container: LTTextContainer) -> Generator[LTTextContainer, LTTextContainer, None]:
+        """
+        pdfminers paragraphs are sometimes too broad and contain lines that should be splitted into header and content
+        @param container: the extracted original paragraph
+        """
         if isinstance(container, LTTextBoxVertical):
             yield container
             return
 
+        line: LTTextLineHorizontal
         wrapper = LTTextBoxHorizontal()
         wrapper.page = container.page
         stack = []
         for line in container:
-            if not isinstance(line, LTTextLineHorizontal):
-                continue
-            
             size = max([obj.size for obj in itertools.islice(line, 10) if isinstance(obj, LTChar)])
             if not stack:
                 wrapper.add(line)
@@ -99,9 +101,6 @@ class FileSource(Source):
                     wrapper = LTTextBoxHorizontal()
                 wrapper.add(line)
         yield wrapper
-
-
-
 
     def read(self, override_la_params=None, override_page_numbers=None) -> Generator[LTTextContainer, Any, None]:
         pNumber = 0
