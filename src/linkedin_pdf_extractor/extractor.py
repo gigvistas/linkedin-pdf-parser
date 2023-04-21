@@ -5,51 +5,65 @@ import json
 from pdfstructure.model.document import TextElement, Section, StructuredPdfDocument, DanglingTextSection
 from typing import List
 import pandas as pd
-from py_dto import DTO
 import re
+import jsonpickle
 
 
-
-class Summary(DTO):
-    description = []
-
-
-class Contact(DTO):
-    mobile: str
-    email: str
-    link: str
-    description: str
-
-
-class Experience(DTO):
-    id: int
-    companyName: str
-    position: str
-    date: str
-    description = {}
-
-
-class Education(DTO):
-    course: str
-    university: str
-    date: str
-    description = []
-
-
-class User(DTO):
-    name: str
-    contact: Contact
-    title: str
-    location: str
-    summary: str
-    skills = []
-    experience: list[Experience]
-    education: list[Education]
-
+class Summary:
+    def __init__(self):
+        self.description = []
     def toJSON(self):
-        return json.dumps(self, default=lambda o: o.__dict__,
-                          sort_keys=False, indent=4)
+        return json.dumps(self, default=lambda o: o.__dict__, 
+            sort_keys=True, indent=2)
 
+class Contact:
+    def __init__(self):
+        self.mobile = ""
+        self.email = ""
+        self.link = ""
+        self.description = ""
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, 
+            sort_keys=True, indent=2)
+
+
+class Experience:
+    def __init__(self):
+        self.id = 0
+        self.companyName = ""
+        self.position = ""
+        self.date = ""
+        self.description = ""
+        def toJSON(self):
+            return json.dumps(self, default=lambda o: o.__dict__, 
+                sort_keys=True, indent=2)
+
+class Education:
+    def __init__(self):
+        self.course = ""
+        self.university = ""
+        self.date = ""
+        self.description = []
+    
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, 
+            sort_keys=True, indent=2)
+
+
+class User:
+    def __init__(self):
+        self.name = ""
+        self.contact = Contact()
+        self.title = ""
+        self.location = ""
+        self.summary = ""
+        self.skills = []
+        self.experience = []
+        self.education = []
+    
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, 
+            sort_keys=True, indent=2)
 
 # Dict = {}
 Data = []
@@ -61,12 +75,10 @@ def pdf_to_json(pdfpath:str):
     document = parser.parse_pdf(source)
 
     a = document.elements
-    print(a[0])
-    print(a[0].children[1])
+    #print(a[0])
+    #print(a[0].children[1])
 
     traverse(document.elements, document.elements[0].level)
-    for d in Data:
-        print(d)
     df = pd.DataFrame(Data)
     dtoData = createData(df)
     print("The variable, name : ", dtoData.name)
@@ -74,6 +86,9 @@ def pdf_to_json(pdfpath:str):
     print("The variable, email : ", dtoData.contact.email)
     print("The variable, title : ", dtoData.title)
     print("The variable, summary : ", dtoData.summary)
+    jsonStr = dtoData.toJSON()
+    print(jsonStr)
+    return jsonStr
 
 
 def traverse(elements: List[Section], level, parent=None):
@@ -90,11 +105,11 @@ def traverse(elements: List[Section], level, parent=None):
 
 
 def createData(data):
-    user = User
-    summary = Summary
-    contact = Contact
-    experience = Experience
-    education = Education
+    user = User()
+    summary = Summary()
+    contact = Contact()
+    experience = Experience()
+    education = Education()
     i = 0
     for index, row in data.iterrows():
         if (row['level'] == 1 and row["mean_size"] == 26.0 and row["max_size"] == 26.0):
@@ -137,5 +152,4 @@ def createData(data):
 
     return user
 
-
-
+#pdf_to_json("/Users/rishav/code/github/gigvistas/linkedin-pdf-parser/tests/resources/profile.pdf")
