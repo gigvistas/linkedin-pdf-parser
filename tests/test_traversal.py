@@ -1,11 +1,11 @@
 from pathlib import Path
 from unittest import TestCase
 
-from pdfstructure.hierarchy.parser import HierarchyParser
-from pdfstructure.hierarchy.traversal import traverse_in_order, traverse_level_order, get_document_depth, \
+from linkedin_pdf_extractor.pdfstructure.hierarchy.parser import HierarchyParser
+from linkedin_pdf_extractor.pdfstructure.hierarchy.traversal import traverse_in_order, traverse_level_order, get_document_depth, \
     traverse_inorder_sections_with_content
-from pdfstructure.model.document import DanglingTextSection
-from pdfstructure.source import FileSource
+from linkedin_pdf_extractor.pdfstructure.model.document import DanglingTextSection
+from linkedin_pdf_extractor.pdfstructure.source import FileSource
 
 
 class TestDocumentTraversal(TestCase):

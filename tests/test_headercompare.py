@@ -2,9 +2,9 @@ from unittest import TestCase
 
 from pdfminer.layout import LTChar, LTTextBoxHorizontal, LTTextLineHorizontal
 
-from pdfstructure.hierarchy.headercompare import condition_h2_extends_h1, condition_h1_enum_h2_not
-from pdfstructure.model.document import TextElement, Section
-from pdfstructure.model.style import Style, TextSize
+from linkedin_pdf_extractor.pdfstructure.hierarchy.headercompare import condition_h2_extends_h1, condition_h1_enum_h2_not
+from linkedin_pdf_extractor.pdfstructure.model.document import TextElement, Section
+from linkedin_pdf_extractor.pdfstructure.model.style import Style, TextSize
 
 
 class TestSubHeaderConditions(TestCase):

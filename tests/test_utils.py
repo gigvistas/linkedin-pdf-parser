@@ -1,7 +1,7 @@
 from pathlib import Path
 from unittest import TestCase
 
-from pdfstructure.utils import element_generator, word_generator
+from linkedin_pdf_extractor.pdfstructure.utils import element_generator, word_generator
 
 
 class Test(TestCase):

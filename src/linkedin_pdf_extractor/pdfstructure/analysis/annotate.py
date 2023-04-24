@@ -3,11 +3,11 @@ from collections import Counter
 
 from pdfminer.layout import LTTextBoxHorizontal, LTChar
 
-from pdfstructure.analysis.sizemapper import SizeMapper
-from pdfstructure.analysis.styledistribution import StyleDistribution
-from pdfstructure.model.document import TextElement
-from pdfstructure.model.style import Style, TextSize
-from pdfstructure.utils import truncate
+from linkedin_pdf_extractor.pdfstructure.analysis.sizemapper import SizeMapper
+from linkedin_pdf_extractor.pdfstructure.analysis.styledistribution import StyleDistribution
+from linkedin_pdf_extractor.pdfstructure.model.document import TextElement
+from linkedin_pdf_extractor.pdfstructure.model.style import Style, TextSize
+from linkedin_pdf_extractor.pdfstructure.utils import truncate
 
 
 class StyleAnnotator:

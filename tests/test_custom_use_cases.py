@@ -1,10 +1,10 @@
 from pathlib import Path
 from unittest import TestCase
 
-from pdfstructure.hierarchy.parser import HierarchyParser
-from pdfstructure.hierarchy.traversal import traverse_inorder_sections_with_content
-from pdfstructure.printer import PrettyStringPrinter as txtPrinter
-from pdfstructure.source import FileSource
+from linkedin_pdf_extractor.pdfstructure.hierarchy.parser import HierarchyParser
+from linkedin_pdf_extractor.pdfstructure.hierarchy.traversal import traverse_inorder_sections_with_content
+from linkedin_pdf_extractor.pdfstructure.printer import PrettyStringPrinter as txtPrinter
+from linkedin_pdf_extractor.pdfstructure.source import FileSource
 
 
 class TestExamples(TestCase):

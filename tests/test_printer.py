@@ -2,10 +2,10 @@ import json
 from pathlib import Path
 from unittest import TestCase
 
-from pdfstructure.hierarchy.parser import HierarchyParser
-from pdfstructure.model.document import StructuredPdfDocument
-from pdfstructure.printer import PrettyStringFilePrinter, PrettyStringPrinter, JsonFilePrinter, JsonStringPrinter
-from pdfstructure.source import FileSource
+from linkedin_pdf_extractor.pdfstructure.hierarchy.parser import HierarchyParser
+from linkedin_pdf_extractor.pdfstructure.model.document import StructuredPdfDocument
+from linkedin_pdf_extractor.pdfstructure.printer import PrettyStringFilePrinter, PrettyStringPrinter, JsonFilePrinter, JsonStringPrinter
+from linkedin_pdf_extractor.pdfstructure.source import FileSource
 
 
 class TestPrettyStringPrinter(TestCase):

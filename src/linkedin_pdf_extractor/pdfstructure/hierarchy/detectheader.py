@@ -2,10 +2,10 @@ from collections import Counter
 
 from pdfminer.layout import LTTextBoxVertical
 
-from pdfstructure.analysis.styledistribution import StyleDistribution
-from pdfstructure.model.document import TextElement
-from pdfstructure.model.style import TextSize
-from pdfstructure.utils import word_generator
+from linkedin_pdf_extractor.pdfstructure.analysis.styledistribution import StyleDistribution
+from linkedin_pdf_extractor.pdfstructure.model.document import TextElement
+from linkedin_pdf_extractor.pdfstructure.model.style import TextSize
+from linkedin_pdf_extractor.pdfstructure.utils import word_generator
 
 
 def header_detector(element: TextElement, style_distribution: StyleDistribution):

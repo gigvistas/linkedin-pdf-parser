@@ -1,10 +1,10 @@
 import json
 from typing import Iterator
 
-from pdfstructure.hierarchy.traversal import traverse_in_order
-from pdfstructure.model.document import Section, StructuredPdfDocument, TextElement
-from pdfstructure.model.style import Style
-from pdfstructure.utils import dict_subset
+from linkedin_pdf_extractor.pdfstructure.hierarchy.traversal import traverse_in_order
+from linkedin_pdf_extractor.pdfstructure.model.document import Section, StructuredPdfDocument, TextElement
+from linkedin_pdf_extractor.pdfstructure.model.style import Style
+from linkedin_pdf_extractor.pdfstructure.utils import dict_subset
 
 
 class Printer:

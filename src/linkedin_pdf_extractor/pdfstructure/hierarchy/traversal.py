@@ -2,7 +2,7 @@ import sys
 from collections import deque
 from typing import Generator
 
-from pdfstructure.model.document import StructuredPdfDocument, Section
+from linkedin_pdf_extractor.pdfstructure.model.document import StructuredPdfDocument, Section
 
 
 def get_document_depth(document: StructuredPdfDocument):

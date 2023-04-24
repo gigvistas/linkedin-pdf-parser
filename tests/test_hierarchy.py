@@ -3,10 +3,10 @@ from unittest import TestCase
 
 from pdfminer.high_level import extract_text
 
-from pdfstructure.hierarchy.parser import HierarchyParser
-from pdfstructure.model.document import DanglingTextSection
-from pdfstructure.printer import PrettyStringPrinter
-from pdfstructure.source import FileSource
+from linkedin_pdf_extractor.pdfstructure.hierarchy.parser import HierarchyParser
+from linkedin_pdf_extractor.pdfstructure.model.document import DanglingTextSection
+from linkedin_pdf_extractor.pdfstructure.printer import PrettyStringPrinter
+from linkedin_pdf_extractor.pdfstructure.source import FileSource
 
 
 class TestHierarchy(TestCase):

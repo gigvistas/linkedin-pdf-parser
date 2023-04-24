@@ -3,13 +3,13 @@ from typing import List, Generator
 
 from pdfminer.layout import LTTextContainer, LAParams
 
-from pdfstructure.analysis.annotate import StyleAnnotator
-from pdfstructure.analysis.sizemapper import PivotLogMapper
-from pdfstructure.analysis.styledistribution import count_sizes, StyleDistribution
-from pdfstructure.hierarchy.detectheader import header_detector
-from pdfstructure.hierarchy.headercompare import get_default_sub_header_conditions
-from pdfstructure.model.document import TextElement, Section, StructuredPdfDocument, DanglingTextSection
-from pdfstructure.source import Source
+from linkedin_pdf_extractor.pdfstructure.analysis.annotate import StyleAnnotator
+from linkedin_pdf_extractor.pdfstructure.analysis.sizemapper import PivotLogMapper
+from linkedin_pdf_extractor.pdfstructure.analysis.styledistribution import count_sizes, StyleDistribution
+from linkedin_pdf_extractor.pdfstructure.hierarchy.detectheader import header_detector
+from linkedin_pdf_extractor.pdfstructure.hierarchy.headercompare import get_default_sub_header_conditions
+from linkedin_pdf_extractor.pdfstructure.model.document import TextElement, Section, StructuredPdfDocument, DanglingTextSection
+from linkedin_pdf_extractor.pdfstructure.source import Source
 
 
 class HierarchyParser:

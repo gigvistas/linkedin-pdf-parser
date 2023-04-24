@@ -3,8 +3,8 @@ from typing import List
 
 from pdfminer.layout import LTTextContainer
 
-from pdfstructure.analysis.styledistribution import StyleDistribution
-from pdfstructure.model.style import Style
+from linkedin_pdf_extractor.pdfstructure.analysis.styledistribution import StyleDistribution
+from linkedin_pdf_extractor.pdfstructure.model.style import Style
 
 
 class TextElement:

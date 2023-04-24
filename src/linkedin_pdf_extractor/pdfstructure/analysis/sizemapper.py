@@ -2,8 +2,8 @@ import math
 from enum import Enum
 from typing import Type
 
-from pdfstructure.analysis.styledistribution import StyleDistribution
-from pdfstructure.model.style import TextSize
+from linkedin_pdf_extractor.pdfstructure.analysis.styledistribution import StyleDistribution
+from linkedin_pdf_extractor.pdfstructure.model.style import TextSize
 
 
 class SizeMapper:

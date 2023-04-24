@@ -5,11 +5,11 @@ from unittest import TestCase
 
 import pandas as pd
 
-from pdfstructure.analysis.annotate import StyleAnnotator
-from pdfstructure.analysis.sizemapper import PivotLogMapper, PivotLinearMapper
-from pdfstructure.analysis.styledistribution import count_sizes, StyleDistribution
-from pdfstructure.model.style import TextSize
-from pdfstructure.utils import element_generator, find_file, DocTypeFilter
+from linkedin_pdf_extractor.pdfstructure.analysis.annotate import StyleAnnotator
+from linkedin_pdf_extractor.pdfstructure.analysis.sizemapper import PivotLogMapper, PivotLinearMapper
+from linkedin_pdf_extractor.pdfstructure.analysis.styledistribution import count_sizes, StyleDistribution
+from linkedin_pdf_extractor.pdfstructure.model.style import TextSize
+from linkedin_pdf_extractor.pdfstructure.utils import element_generator, find_file, DocTypeFilter
 
 
 class TestSizeMapper(TestCase):

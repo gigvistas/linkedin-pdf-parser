@@ -4,7 +4,7 @@ from collections import Counter, defaultdict
 from pdfminer.layout import LTTextContainer, LTTextLine, LTChar
 from sortedcontainers import SortedDict
 
-from pdfstructure.utils import truncate, closest_key
+from linkedin_pdf_extractor.pdfstructure.utils import truncate, closest_key
 
 
 class StyleDistribution:

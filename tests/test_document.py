@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 from unittest import TestCase
 
-from pdfstructure.model.document import StructuredPdfDocument
+from linkedin_pdf_extractor.pdfstructure.model.document import StructuredPdfDocument
 
 
 class TestSection(TestCase):
