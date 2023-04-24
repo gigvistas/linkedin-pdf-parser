@@ -1,12 +1,12 @@
 from linkedin_pdf_extractor.pdfstructure.hierarchy.parser import HierarchyParser
 from linkedin_pdf_extractor.pdfstructure.source import FileSource
-from linkedin_pdf_extractor.pdfstructure.printer import JsonFilePrinter
+# from linkedin_pdf_extractor.pdfstructure.printer import JsonFilePrinter
 import json
-from linkedin_pdf_extractor.pdfstructure.model.document import TextElement, Section, StructuredPdfDocument, DanglingTextSection
+from linkedin_pdf_extractor.pdfstructure.model.document import Section
 from typing import List
 import pandas as pd
 import re
-import jsonpickle
+
 
 
 class Summary:
