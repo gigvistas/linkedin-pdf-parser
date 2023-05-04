@@ -49,8 +49,12 @@ This project has been set up using PyScaffold 4.3.1. For details and usage
 information on PyScaffold see https://pyscaffold.org/.
 
 Steps to upload it to pypi:
+1. delete the old tag 
+command to delete the tag on local repo : git tag -d <tagname>
+2.push the changes to remote:
+command:    git push origin --delete <tagname>
 1. create a new tag 
-eg:
+
 Command to create a new tag : git tag -a tagname -m "my version 1.4"
 2. push that tag
     git push origin tagname
