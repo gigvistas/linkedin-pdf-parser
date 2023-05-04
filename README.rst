@@ -47,3 +47,17 @@ Note
 
 This project has been set up using PyScaffold 4.3.1. For details and usage
 information on PyScaffold see https://pyscaffold.org/.
+
+Steps to upload it to pypi:
+1. create a new tag 
+eg:
+Command to create a new tag : git tag -a tagname -m "my version 1.4"
+2. push that tag
+    git push origin tagname
+
+3.command to build that package: tox -e build  # to build your package distribution
+
+4.Command to publish it to pypi
+tox -e publish -- --repository pypi  # to release your package to PyPI
+
+
