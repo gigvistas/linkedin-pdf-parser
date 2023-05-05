@@ -62,7 +62,7 @@ Command: to create a new tag : git tag -a tagname -m "my version 1.4"
 Command:    git push origin tagname
 
 5. Build the package distribution
-Command: to build that package: tox -e build  # to build your package distribution
+Command:  tox -e build  # to build your package distribution
 
 6. Publish the package 
 Command: tox -e publish -- --repository pypi  # to release your package to PyPI
