@@ -34,6 +34,7 @@ class Experience:
         self.position = ""
         self.date = ""
         self.description = ""
+        self.location = ""
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, 
             sort_keys=True, indent=2)
@@ -80,6 +81,7 @@ def pdf_to_json(pdfpath:str):
 
     traverse(document.elements, document.elements[0].level)
     df = pd.DataFrame(Data)
+    print(df)
     dtoData = createData(df)
     print("The variable, name : ", dtoData.name)
     print("The variable, mobile : ", dtoData.contact.mobile)
@@ -122,34 +124,48 @@ def createData(data):
             contact.description = row["text"]
         elif (row['level'] == 3 and row["mean_size"] == 10.5 and row["max_size"] == 10.5 and row["type"] == "Top Skills"):
             user.skills.append(row["text"])
-        # elif (row['level'] == 2 and row["type"] == "Experience"):
-        #     if (row["max_size"] == 12.0):
-        #         if(experience.companyName is not None):
-        #             user.experience.append(experience)
-        #         experience=Experience
-        #         # experience.id = i
-        #         experience.companyName = row['text'].split('\n')[0]
-        #         experience.position = row['text'].split('\n')[1]
-        #         experience.date = row['text'].split('\n')[2]
-        #         i = i + 1
-        #     elif (row["mean_size"] == 10.5 and row["max_size"] == 10.5):
-        #         experience.description.append(row["text"])
-        elif (row['level'] == 2 and row["mean_size"] == 12.0 and row["max_size"] == 12.0 and row["type"] == "Education"):
-            education.description.append(row["text"])
+        elif(row['level'] == 2 and row["type"] == "Experience"):
+            parseExperience(row, user)
+        # elif (row["type"] == "Education"):
+        #     education.description.append(row["text"])
 
     user.summary = ' '.join(map(str, summary.description))
 
-    mobile_pattern = r'\+(\d{1,2})?\s*\d{9,10}\s*\((Mobile)\)'
-    email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-    match = re.search(mobile_pattern, contact.description)
-    if match:
-        contact.mobile = match.group(0)
-        contact.email = re.search(
-            email_pattern, contact.description[match.end():]).group(0)
-    else:
-        contact.email = re.search(email_pattern, contact.description).group(0)
-    user.contact = contact
+    # mobile_pattern = r'\+(\d{1,2})?\s*\d{9,10}\s*\((Mobile)\)'
+    # email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+    # match = re.search(mobile_pattern, contact.description)
+    # if match:
+    #     contact.mobile = match.group(0)
+    #     contact.email = re.search(
+    #         email_pattern, contact.description[match.end():]).group(0)
+    # else:
+    #     contact.email = re.search(email_pattern, contact.description).group(0)
+    # user.contact = contact
 
     return user
 
+def parseExperience(row, user):
+    expLength = len(user.experience)
+    exp = Experience() if expLength == 0 else user.experience[expLength-1]
+    
+    if (row["max_size"] == 12.0):
+        exp = Experience()
+        expElements = row['text'].split('\n')
+        if(len(expElements) == 2):
+            exp.companyName = expElements[0]
+            exp.date = expElements[1].replace('\xa0','')
+        elif(len(expElements) == 3):
+            exp.companyName = expElements[0]
+            exp.position = expElements[1]
+            exp.date = expElements[2].replace('\xa0','')
+        elif(len(expElements) == 4 ):
+            exp.companyName = expElements[0]
+            exp.position = expElements[1]
+            exp.date = expElements[2].replace('\xa0','')
+            exp.location = expElements[3]
+        user.experience.append(exp)
+    elif(row["max_size"] > 9.0):
+        user.experience[expLength-1].description += row["text"]
+
 #pdf_to_json("/Users/rishav/code/github/gigvistas/linkedin-pdf-parser/tests/resources/profile.pdf")
+#pdf_to_json("/Users/rishav/Downloads/rishav_linkedin.pdf")
