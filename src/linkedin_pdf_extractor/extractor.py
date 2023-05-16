@@ -76,8 +76,6 @@ def pdf_to_json(pdfpath:str):
     document = parser.parse_pdf(source)
 
     a = document.elements
-    #print(a[0])
-    #print(a[0].children[1])
 
     traverse(document.elements, document.elements[0].level)
     for d in Data:
@@ -116,9 +114,9 @@ def createData(data):
     for index, row in data.iterrows():
         if (row['level'] == 1 and row["mean_size"] == 26.0 and row["max_size"] == 26.0):
             user.name = row["text"]
-        elif (row['level'] == 1 and row["max_size"] == 12.0):
-            user.title = row["text"]
-        elif (row['level'] == 2 and row["max_size"] == 12.0 and row["type"] == "Summary"):
+        elif (row['level'] == 1 and row["mean_size"] == 12.0 and row["max_size"] == 12.0):
+            user.title = row["text"].split('\n')[0]
+        elif (row['level'] == 2 and row["mean_size"] == 12.0 and row["max_size"] == 12.0 and row["type"] == "Summary"):
             summary.description.append(row["text"])
         elif (row['level'] == 3 and row["max_size"] == 10.5 and row["type"] == "Contact"):
             contact.description = row["text"]
@@ -128,25 +126,8 @@ def createData(data):
             parseExperience(row, user)
         elif (row["type"] == "Education"):
             parseEducation(row, user)
-            # if( row["max_size"] == 12.0 ):
-            #     education = Education()
-            #     education.university = row["text"]
-            #     user.education.append(education)
-            # elif( row["max_size"] == 10.5 ):
-            #     user.education[-1].course = row["text"]
     user.summary = ' '.join(map(str, summary.description))
     
-    # mobile_pattern = r'\+(\d{1,2})?\s*\d{9,10}\s*\((Mobile)\)'
-    # email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-    # match = re.search(mobile_pattern, contact.description)
-    # if match:
-    #     contact.mobile = match.group(0)
-    #     contact.email = re.search(
-    #         email_pattern, contact.description[match.end():]).group(0)
-    # else:
-    #     contact.email = re.search(email_pattern, contact.description).group(0)
-    # user.contact = contact
-
     return user
 
 def parseExperience(row, user):
@@ -183,5 +164,5 @@ def parseEducation(row, user):
     elif(row["max_size"] == 10.5):
         user.education[eduLength-1].course += row["text"]
 
-pdf_to_json("/home/pk/Documents/gig-banking/test_linkdin_package/profile.pdf")
+#pdf_to_json("/home/pk/Documents/gig-banking/test_linkdin_package/profile.pdf")
 #pdf_to_json("/Users/rishav/Downloads/rishav_linkedin.pdf")
