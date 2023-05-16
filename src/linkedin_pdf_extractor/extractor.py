@@ -60,7 +60,7 @@ class User:
         self.summary = ""
         self.skills = []
         self.experience = []
-        self.education = []
+        self.education = [] 
     
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, 
@@ -80,14 +80,16 @@ def pdf_to_json(pdfpath:str):
     #print(a[0].children[1])
 
     traverse(document.elements, document.elements[0].level)
+    for d in Data:
+        print(d)
     df = pd.DataFrame(Data)
-    print(df)
+    # print(df)
     dtoData = createData(df)
-    print("The variable, name : ", dtoData.name)
-    print("The variable, mobile : ", dtoData.contact.mobile)
-    print("The variable, email : ", dtoData.contact.email)
-    print("The variable, title : ", dtoData.title)
-    print("The variable, summary : ", dtoData.summary)
+    # print("The variable, name : ", dtoData.name)
+    # print("The variable, mobile : ", dtoData.contact.mobile)
+    # print("The variable, email : ", dtoData.contact.email)
+    # print("The variable, title : ", dtoData.title)
+    # print("The variable, summary : ", dtoData.summary)
     jsonStr = dtoData.toJSON()
     print(jsonStr)
     return jsonStr
@@ -110,27 +112,30 @@ def createData(data):
     user = User()
     summary = Summary()
     contact = Contact()
-    experience = Experience()
-    education = Education()
     i = 0
     for index, row in data.iterrows():
         if (row['level'] == 1 and row["mean_size"] == 26.0 and row["max_size"] == 26.0):
             user.name = row["text"]
-        elif (row['level'] == 1 and row["mean_size"] == 12.0 and row["max_size"] == 12.0):
+        elif (row['level'] == 1 and row["max_size"] == 12.0):
             user.title = row["text"]
-        elif (row['level'] == 2 and row["mean_size"] == 12.0 and row["max_size"] == 12.0 and row["type"] == "Summary"):
+        elif (row['level'] == 2 and row["max_size"] == 12.0 and row["type"] == "Summary"):
             summary.description.append(row["text"])
-        elif (row['level'] == 3 and row["mean_size"] == 10.5 and row["max_size"] == 10.5 and row["type"] == "Contact"):
+        elif (row['level'] == 3 and row["max_size"] == 10.5 and row["type"] == "Contact"):
             contact.description = row["text"]
-        elif (row['level'] == 3 and row["mean_size"] == 10.5 and row["max_size"] == 10.5 and row["type"] == "Top Skills"):
+        elif (row['level'] == 3 and row["max_size"] == 10.5 and row["type"] == "Top Skills"):
             user.skills.append(row["text"])
         elif(row['level'] == 2 and row["type"] == "Experience"):
             parseExperience(row, user)
-        # elif (row["type"] == "Education"):
-        #     education.description.append(row["text"])
-
+        elif (row["type"] == "Education"):
+            parseEducation(row, user)
+            # if( row["max_size"] == 12.0 ):
+            #     education = Education()
+            #     education.university = row["text"]
+            #     user.education.append(education)
+            # elif( row["max_size"] == 10.5 ):
+            #     user.education[-1].course = row["text"]
     user.summary = ' '.join(map(str, summary.description))
-
+    
     # mobile_pattern = r'\+(\d{1,2})?\s*\d{9,10}\s*\((Mobile)\)'
     # email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
     # match = re.search(mobile_pattern, contact.description)
@@ -167,5 +172,16 @@ def parseExperience(row, user):
     elif(row["max_size"] > 9.0):
         user.experience[expLength-1].description += row["text"]
 
-#pdf_to_json("/Users/rishav/code/github/gigvistas/linkedin-pdf-parser/tests/resources/profile.pdf")
+def parseEducation(row, user):
+    eduLength = len(user.education)
+    edu = Education() if eduLength == 0 else user.education[eduLength-1]
+    
+    if (row["max_size"] == 12.0):
+        edu = Education()
+        edu.university = row['text']
+        user.education.append(edu)
+    elif(row["max_size"] == 10.5):
+        user.education[eduLength-1].course += row["text"]
+
+pdf_to_json("/home/pk/Documents/gig-banking/test_linkdin_package/profile.pdf")
 #pdf_to_json("/Users/rishav/Downloads/rishav_linkedin.pdf")

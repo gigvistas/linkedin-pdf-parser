@@ -33,38 +33,56 @@
 linkedin_pdf_extractor
 ======================
 
+# linlkedin pdf data extractor
+`linlkedin_pdf_data_extractor` gets the data extracted by the pdfstructure and sorts it accordingly to its respectrd dto according to the text size and traverse through document
 
-    Add a short description here!
+`linlkedin_pdf_data_extractor` is built on top of [pdfstructure](https://github.com/ChrizH/pdfstructure). 
 
+- Paragraph extraction is performed leveraging `pdfminer.high_level.extract_pages()`.
+- Those paragraphs are then grouped together according to some basic (extendable) heuristics.
 
-A longer description of your project goes here...
+### read pdf document and 
 
+Of course, encoded documents can be easily decoded and used for further analysis. 
+However, detailed information like bounding boxes or coordinates for each character are not persisted.
 
-.. _pyscaffold-notes:
+```
+    source = FileSource("./examples/profile.pdf")
 
-Note
-====
+    document = parser.parse_pdf(source)
+    
+    print(document.title)
+```
 
-This project has been set up using PyScaffold 4.3.1. For details and usage
-information on PyScaffold see https://pyscaffold.org/.
+## Traverse through document structure
+Having all paragraphs and sections organised as a general tree, 
+its straight forward to iterate through the layers and search for specific elements like headlines, or extract all main headers like chapter titles.  
 
-Steps to upload it to pypi:
-1. Delete the old tag 
-command to delete the tag on local repo : git tag -d <tagname>
+Two document traversal generators are available that yield each section `in-order` or in `level-order` respectively. 
+```
+    from pdfstructure.hierarchy.traversal import traverse_in_order
 
-2. Push the changes to remote:
-command:    git push origin --delete <tagname>
+    elements_flat_in_order = [element for element in traverse_in_order(document)]
 
-3. create a new tag 
-Command: to create a new tag : git tag -a tagname -m "my version 1.4"
+    Exemplary illustration of yield order:
+        """
+                         5   10
+                      /   \    \
+                     1     2    3
+                   / | \        |
+                  a  b  c       x
+    
+        yield order:
+        - [5,1,a,b,c,2,10,3,x]
+        """
+```
 
-4. push that tag
-Command:    git push origin tagname
+### to start 
+```
+sudo python3 setup.py install
 
-5. Build the package distribution
-Command:  tox -e build  # to build your package distribution
+pip3 install -r requirements.txt
 
-6. Publish the package 
-Command: tox -e publish -- --repository pypi  # to release your package to PyPI
+python3 extractr.py
 
-
+```
