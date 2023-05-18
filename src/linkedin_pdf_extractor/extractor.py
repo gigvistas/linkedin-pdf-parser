@@ -134,10 +134,12 @@ def parseExperience(row, user):
     expLength = len(user.experience)
     exp = Experience() if expLength == 0 else user.experience[expLength-1]
     
-    if (row["max_size"] == 12.0):
+    if (row["max_size"] >= 11.9):
         exp = Experience()
         expElements = row['text'].split('\n')
-        if(len(expElements) == 2):
+        if(len(expElements) == 1):
+            exp.companyName = expElements[0]
+        elif(len(expElements) == 2):
             exp.companyName = expElements[0]
             exp.date = expElements[1].replace('\xa0','')
         elif(len(expElements) == 3):
