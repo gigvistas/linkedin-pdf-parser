@@ -75,8 +75,6 @@ def pdf_to_json(pdfpath:str):
     source = FileSource(pdfpath)
     document = parser.parse_pdf(source)
 
-    a = document.elements
-
     traverse(document.elements, document.elements[0].level)
     for d in Data:
         print(d)
@@ -99,7 +97,7 @@ def traverse(elements: List[Section], level, parent=None):
         if (e.heading.text == "Summary" or e.heading.text == "Contact" or
            e.heading.text == "Top Skills" or e.heading.text == "Experience" or e.heading.text == "Education"):
             parent = e.heading.text
-        # print(e).
+        # print(e.heading)
         Data.append({"level": level+1, "text": e.heading.text, "type": parent,
                     "mean_size": e.heading.style.mean_size, "max_size": e.heading.style.max_size})
         # print("Level: ", level, element)
@@ -115,17 +113,18 @@ def createData(data):
         if (row['level'] == 1 and row["mean_size"] == 26.0 and row["max_size"] == 26.0):
             user.name = row["text"]
         elif (row['level'] == 1 and row["mean_size"] == 12.0 and row["max_size"] == 12.0):
-            user.title = row["text"].split('\n')[0]
-        elif (row['level'] == 2 and row["mean_size"] == 12.0 and row["max_size"] == 12.0 and row["type"] == "Summary"):
+            user.title = ' '.join(map(str, row["text"].split('\n')[0:-1]))
+        elif (row['level'] == 2 and 11.8 < row["max_size"] < 12.5 and row["type"] == "Summary"):
             summary.description.append(row["text"])
         elif (row['level'] == 3 and row["max_size"] == 10.5 and row["type"] == "Contact"):
             contact.description = row["text"]
         elif (row['level'] == 3 and row["max_size"] == 10.5 and row["type"] == "Top Skills"):
             user.skills.append(row["text"])
-        elif(row['level'] == 2 and row["type"] == "Experience"):
+        elif(row["type"] == "Experience"):
             parseExperience(row, user)
         elif (row["type"] == "Education"):
             parseEducation(row, user)
+    
     user.summary = ' '.join(map(str, summary.description))
     
     return user
@@ -166,5 +165,5 @@ def parseEducation(row, user):
     elif(row["max_size"] == 10.5):
         user.education[eduLength-1].course += row["text"]
 
-#pdf_to_json("/home/pk/Documents/gig-banking/test_linkdin_package/profile.pdf")
+pdf_to_json("/home/pk/Documents/gig-banking/test_linkdin_package/profile.pdf")
 #pdf_to_json("/Users/rishav/Downloads/rishav_linkedin.pdf")
