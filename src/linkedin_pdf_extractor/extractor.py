@@ -93,13 +93,16 @@ def pdf_to_json(pdfpath:str):
 
 def traverse(elements: List[Section], level, parent=None):
     # print(len(elements))
+    i=0
     for e in elements:
         if (e.heading.text == "Summary" or e.heading.text == "Contact" or
            e.heading.text == "Top Skills" or e.heading.text == "Experience" or e.heading.text == "Education"):
             parent = e.heading.text
         # print(e.heading)
+        
         Data.append({"level": level+1, "text": e.heading.text, "type": parent,
-                    "mean_size": e.heading.style.mean_size, "max_size": e.heading.style.max_size})
+                    "mean_size": e.heading.style.mean_size, "max_size": e.heading.style.max_size, "index": i})
+        i=i+1
         # print("Level: ", level, element)
         traverse(e.children, e.level, parent)
 
@@ -116,11 +119,12 @@ def createData(data):
             user.title = ' '.join(map(str, row["text"].split('\n')[0:-1]))
         elif (row['level'] == 2 and 11.8 < row["max_size"] < 12.5 and row["type"] == "Summary"):
             summary.description.append(row["text"])
-        elif (row['level'] == 3 and row["max_size"] == 10.5 and row["type"] == "Contact"):
+        elif (row['level'] == 3 and 10.4 < row["max_size"] < 10.6 and row["type"] == "Contact"):
             contact.description = row["text"]
-        elif (row['level'] == 3 and row["max_size"] == 10.5 and row["type"] == "Top Skills"):
+        elif (row['level'] == 3 and 10.4 < row["max_size"] < 10.6 and row["type"] == "Top Skills"):
             user.skills.append(row["text"])
         elif(row["type"] == "Experience"):
+            # if()
             parseExperience(row, user)
         elif (row["type"] == "Education"):
             parseEducation(row, user)
@@ -132,7 +136,7 @@ def createData(data):
 def parseExperience(row, user):
     expLength = len(user.experience)
     exp = Experience() if expLength == 0 else user.experience[expLength-1]
-    if (12.9 <= row["max_size"] and row["max_size"] >= 11.9):
+    if (row["max_size"] <= 12.9 and row["max_size"] >= 11.9):
         exp = Experience()
         expElements = row['text'].split('\n')
         if(len(expElements) == 1):
@@ -150,19 +154,19 @@ def parseExperience(row, user):
             exp.date = expElements[2].replace('\xa0','')
             exp.location = expElements[3]
         user.experience.append(exp)
-    elif(row["max_size"] > 9.0):
+    elif(row["max_size"] > 9.0 and row["max_size"] < 11.0):
         user.experience[expLength-1].description += row["text"]
 
 def parseEducation(row, user):
     eduLength = len(user.education)
     edu = Education() if eduLength == 0 else user.education[eduLength-1]
     
-    if (row["max_size"] == 12.0):
+    if (row["max_size"] <= 12.9 and row["max_size"] >= 11.9):
         edu = Education()
         edu.university = row['text']
         user.education.append(edu)
-    elif(row["max_size"] == 10.5):
+    elif(row["max_size"] < 10.6 and row["max_size"] > 10.2 ):
         user.education[eduLength-1].course += row["text"]
 
-# pdf_to_json("/home/pk/Documents/gig-banking/test_linkdin_package/profile.pdf")
+pdf_to_json("/home/pk/Documents/gig-banking/test_linkdin_package/AalokCV.pdf")
 #pdf_to_json("/Users/rishav/Downloads/rishav_linkedin.pdf")
