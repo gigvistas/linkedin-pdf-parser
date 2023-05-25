@@ -165,5 +165,5 @@ def parseEducation(row, user):
     elif(row["max_size"] == 10.5):
         user.education[eduLength-1].course += row["text"]
 
-pdf_to_json("/home/pk/Documents/gig-banking/test_linkdin_package/profile.pdf")
+# pdf_to_json("/home/pk/Documents/gig-banking/test_linkdin_package/profile.pdf")
 #pdf_to_json("/Users/rishav/Downloads/rishav_linkedin.pdf")
