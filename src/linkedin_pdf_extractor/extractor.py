@@ -132,8 +132,7 @@ def createData(data):
 def parseExperience(row, user):
     expLength = len(user.experience)
     exp = Experience() if expLength == 0 else user.experience[expLength-1]
-    
-    if (row["max_size"] >= 11.9):
+    if (12.9 <= row["max_size"] and row["max_size"] >= 11.9):
         exp = Experience()
         expElements = row['text'].split('\n')
         if(len(expElements) == 1):
