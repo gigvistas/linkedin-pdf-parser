@@ -121,7 +121,7 @@ def createData(data):
             summary.description.append(row["text"])
         elif (row['level'] == 3 and 10.4 < row["max_size"] < 10.6 and row["type"] == "Contact"):
             contact.description = row["text"]
-        elif ((row['level'] == 2 or row['level'] == 1) and 10.4 < row["max_size"] < 10.6 and row["type"] == "Top Skills"):
+        elif ((row['level'] == 3 or row['level'] == 1) and 10.4 < row["max_size"] < 10.6 and row["type"] == "Top Skills"):
             user.skills.append(row["text"])
         elif(row["type"] == "Experience"):
             # if()
