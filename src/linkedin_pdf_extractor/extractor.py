@@ -117,7 +117,7 @@ def createData(data):
             user.name = row["text"]
         elif (row['level'] == 1 and row["mean_size"] == 12.0 and row["max_size"] == 12.0):
             user.title = ' '.join(map(str, row["text"].split('\n')[0:-1]))
-        elif (row['level'] == 2 and 11.8 < row["max_size"] < 12.5 and row["type"] == "Summary"):
+        elif ((row['level'] == 2 or row['level'] == 3) and 11.8 < row["max_size"] < 12.5 and row["type"] == "Summary"):
             summary.description.append(row["text"])
         elif (row['level'] == 3 and 10.4 < row["max_size"] < 10.6 and row["type"] == "Contact"):
             contact.description = row["text"]
@@ -154,7 +154,7 @@ def parseExperience(row, user):
             exp.date = expElements[2].replace('\xa0','')
             exp.location = expElements[3]
         user.experience.append(exp)
-    elif(row["max_size"] > 9.0 and row["max_size"] < 11.0):
+    elif(row["max_size"] > 9.0 and row["max_size"] < 11.5):
         user.experience[expLength-1].description += row["text"]
 
 def parseEducation(row, user):
@@ -168,5 +168,5 @@ def parseEducation(row, user):
     elif(row["max_size"] < 10.6 and row["max_size"] > 10.2 ):
         user.education[eduLength-1].course += row["text"]
 
-# pdf_to_json("/home/pk/Documents/gig-banking/test_linkdin_package/AalokCV.pdf")
-#pdf_to_json("/Users/rishav/Downloads/rishav_linkedin.pdf")
+#pdf_to_json("/home/pk/Documents/gig-banking/test_linkdin_package/profile.pdf")
+pdf_to_json("/Users/rishav/Downloads/rashmi_linkedin.pdf")
