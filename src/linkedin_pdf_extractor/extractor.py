@@ -95,8 +95,8 @@ def traverse(elements: List[Section], level, parent=None):
     # print(len(elements))
     i=0
     for e in elements:
-        if (e.heading.text == "Summary" or e.heading.text == "Contact" or
-           e.heading.text == "Top Skills" or e.heading.text == "Experience" or e.heading.text == "Education"):
+        if (e.heading.text == "Summary" or e.heading.text == "Contact" or e.heading.text == "Top Skills" or 
+            e.heading.text == "Experience" or e.heading.text == "Education" or e.heading.text == "Certifications" or e.heading.text == "Languages"):
             parent = e.heading.text
         # print(e.heading)
         
