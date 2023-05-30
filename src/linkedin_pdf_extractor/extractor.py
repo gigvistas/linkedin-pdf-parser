@@ -169,4 +169,4 @@ def parseEducation(row, user):
         user.education[eduLength-1].course += row["text"]
 
 # pdf_to_json("/home/pk/Documents/gig-banking/test_linkdin_package/rashmi.pdf")
-#pdf_to_json("/Users/rishav/Downloads/rashmi_linkedin.pdf")
+# pdf_to_json("/Users/rishav/Downloads/rashmi_linkedin.pdf")
