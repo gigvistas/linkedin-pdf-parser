@@ -116,15 +116,14 @@ def createData(data):
         if (row['level'] == 1 and row["mean_size"] == 26.0 and row["max_size"] == 26.0):
             user.name = row["text"]
         elif (row['level'] == 1 and row["mean_size"] == 12.0 and row["max_size"] == 12.0):
-            user.title = ' '.join(map(str, row["text"].split('\n')[0:-1]))
+            user.title = ' '.join(map(str,  decode( row["text"] ).split('\n')[0:-1]))
         elif ((row['level'] == 2 or row['level'] == 3) and 11.8 < row["max_size"] < 12.5 and row["type"] == "Summary"):
-            summary.description.append(row["text"])
+            summary.description.append( decode( row["text"] ).replace("\n", " "))
         elif (row['level'] == 3 and 10.4 < row["max_size"] < 10.6 and row["type"] == "Contact"):
-            contact.description = row["text"]
+            contact.description =  decode( row["text"] )
         elif ((row['level'] == 3 or row['level'] == 1) and 10.4 < row["max_size"] < 10.6 and row["type"] == "Top Skills"):
             user.skills.append(row["text"])
         elif(row["type"] == "Experience"):
-            # if()
             parseExperience(row, user)
         elif (row["type"] == "Education"):
             parseEducation(row, user)
@@ -138,7 +137,7 @@ def parseExperience(row, user):
     exp = Experience() if expLength == 0 else user.experience[expLength-1]
     if (row["max_size"] <= 12.9 and row["max_size"] >= 11.9):
         exp = Experience()
-        expElements = row['text'].split('\n')
+        expElements =  decode( row["text"] ).split('\n')
         if(len(expElements) == 1):
             exp.companyName = expElements[0]
         elif(len(expElements) == 2):
@@ -155,18 +154,21 @@ def parseExperience(row, user):
             exp.location = expElements[3]
         user.experience.append(exp)
     elif(row["max_size"] > 9.0 and row["max_size"] < 11.5):
-        user.experience[expLength-1].description += row["text"]
+        user.experience[expLength-1].description += " " + decode( row["text"] )
 
 def parseEducation(row, user):
     eduLength = len(user.education)
     edu = Education() if eduLength == 0 else user.education[eduLength-1]
-    
     if (row["max_size"] <= 12.9 and row["max_size"] >= 11.9):
         edu = Education()
-        edu.university = row['text']
+        edu.university = decode(row["text"])
         user.education.append(edu)
     elif(row["max_size"] < 10.6 and row["max_size"] > 10.2 ):
-        user.education[eduLength-1].course += row["text"]
+        user.education[eduLength-1].course += decode(row["text"])
 
-# pdf_to_json("/home/pk/Documents/gig-banking/test_linkdin_package/rashmi.pdf")
+def decode(str):
+    string_encode = str.encode("ascii", "ignore")
+    return string_encode.decode().strip()
+
+# pdf_to_json("/home/pk/Documents/gig-banking/test_linkdin_package/raj.pdf")
 # pdf_to_json("/Users/rishav/Downloads/rashmi_linkedin.pdf")
